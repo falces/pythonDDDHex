@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .CountryController import countryController
+from Infrastructure.Controller.CountryController import countryController
 
 v1ControllerBase = Blueprint('v1', __name__)
 

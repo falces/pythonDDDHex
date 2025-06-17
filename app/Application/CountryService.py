@@ -14,10 +14,11 @@ class CountryService:
         for country in countries:
             myCountry = Country(
                 id=country['id'],
-                name=country['name'],
-                code=country['code'],
-                hasSubzone=country['hasSubzone'],
-                isEUMember=country['isEUMember']
+                name=country['description'],
+                code=country['country_code'],
+                hasSubzone=country['subdivisions_in_use'],
+                isEUMember=country['eu_member']
             )
-            myCountries.append(myCountry.toDict)
-        return countries
+            country = myCountry.toDict()
+            myCountries.append(country)
+        return myCountries
