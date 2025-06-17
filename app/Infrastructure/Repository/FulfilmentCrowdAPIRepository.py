@@ -8,12 +8,19 @@ class FulfilmentCrowdAPIRepository(AbstractCountryRepository):
         self.url = '/countries'
         self.apiKey = current_app.config['API_KEY']
     
-    def getAllCountries(self) -> list:      
+    def getAllCountries(self, resultsInFile: bool = False) -> list:
+
+        fileName = None
+        if resultsInFile:
+            fileName = 'countries.xlsx'
+        
         data = self.api_tools.get(
             url = self.url,
             headers = {
                         'fulfilmentcrowd-api-key': self.apiKey
                       },
+            resultsInFile=resultsInFile,
+            fileName=fileName
         )
         data = data.json()
         return data

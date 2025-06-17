@@ -4,12 +4,15 @@ from Domain.Country.Entity.Country import Country
 class CountryService:
     def __init__(
         self,
-        countryRepository: AbstractCountryRepository
+        countryRepository: AbstractCountryRepository,
     ):
         self.countryRepository = countryRepository()
         
-    def getAllCountries(self) -> list:
-        countries = self.countryRepository.getAllCountries()
+    def getAllCountries(
+        self,
+        resultsInFile: bool = False,
+    ) -> list:
+        countries = self.countryRepository.getAllCountries(resultsInFile)
         myCountries = []
         for country in countries:
             myCountry = Country(

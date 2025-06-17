@@ -10,12 +10,17 @@ class APITools:
         url: str,
         params: dict = None,
         headers: dict = None,
+        resultsInFile: bool = False,
+        fileName: str = None,
     ) -> requests.Response:        
         response = requests.get(
             current_app.config['HOST'] + url,
             params=params,
             headers=headers,
         )
+        if resultsInFile:
+            self.createExcelFromAPIResponse(response.json(), fileName)
+
         response.raise_for_status()
         return response
 
@@ -38,10 +43,9 @@ class APITools:
     def createExcelFromAPIResponse(
         self,
         data: dict,
-        filename: str
+        fileName: str
     ) -> None:
-
         import pandas as pd
 
         df = pd.DataFrame(data)
-        df.to_excel('.' + '/output/' + filename, index=False)
+        df.to_excel('.' + '/output/' + fileName, index=False)
