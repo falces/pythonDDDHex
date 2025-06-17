@@ -1,25 +1,16 @@
-from Infrastructure.Controller.CountryController import CountryController
+from flask import Flask
 
-class App:
-    def __init__(self, countryController: CountryController):
-        self.countryController = countryController
+from Infrastructure.Controller.Controller import v1ControllerBase
+from Infrastructure.Controller.ToolsController import toolsController
 
-    def run(self):
-        countries = self.countryController.getCountries()
-        for country in countries:
-            print(country)
-            
+app = Flask(__name__)
+app.register_blueprint(v1ControllerBase, url_prefix='/api/v1')
+app.register_blueprint(toolsController, url_prefix='/tools')
+
+@app.route('/', methods=['GET'])
+def index():
+    return {'status': 'API is running'}
+
 if __name__ == "__main__":
-    from Infrastructure.Repository.CountryRepository import CountryRepository
-    from Application.CountryService import CountryService
-
-    # Initialize the repository and service
-    country_repository = CountryRepository()
-    country_service = CountryService(country_repository)
-
-    # Initialize the controller with the service
-    country_controller = CountryController(country_service)
-
-    # Create the app instance and run it
-    app = App(country_controller)
-    app.run()
+    
+    app.run(debug=True)

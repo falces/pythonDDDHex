@@ -6,13 +6,12 @@ class CountryService:
         self,
         countryRepository: AbstractCountryRepository
     ):
-        self.countryRepository = countryRepository
+        self.countryRepository = countryRepository()
         
     def getAllCountries(self) -> list:
         countries = self.countryRepository.getAllCountries()
         myCountries = []
         for country in countries:
-            # Assuming each country is a dictionary with the necessary fields
             myCountry = Country(
                 id=country['id'],
                 name=country['name'],

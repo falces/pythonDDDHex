@@ -1,4 +1,3 @@
-from abc import ABC
 from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
 
 class CountryRepository(AbstractCountryRepository):

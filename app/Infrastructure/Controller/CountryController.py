@@ -1,8 +1,11 @@
+from flask import Blueprint
+
 from Application.CountryService import CountryService
+from Infrastructure.Repository.CountryRepository import CountryRepository
 
-class CountryController:
-    def __init__(self, CountryService: CountryService):
-        self.countryService = CountryService
+countryController = Blueprint('countryController', __name__)
 
-    def getCountries(self):
-        return self.countryService.getAllCountries()
+@countryController.route('/', methods=['GET'])
+def getCountries():
+    countries = CountryService(CountryRepository)   
+    return countries.getAllCountries()
