@@ -9,18 +9,18 @@ class APITools:
         self,
         url: str,
         params: dict = None,
-        headers: dict = None,
         resultsInFile: bool = False,
         fileName: str = None,
     ) -> requests.Response:        
         response = requests.get(
             current_app.config['HOST'] + url,
-            params=params,
-            headers=headers,
+            params = params,
+            headers = {
+                        'fulfilmentcrowd-api-key': current_app.config['API_KEY'],
+                      },
         )
         if resultsInFile:
             self.createExcelFromAPIResponse(response.json(), fileName)
-
         response.raise_for_status()
         return response
 

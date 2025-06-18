@@ -1,26 +1,53 @@
-from flask import current_app
 from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
 from Shared.Infrastructure.APITools import APITools
 
 class FulfilmentCrowdAPIRepository(AbstractCountryRepository):
+    COUNTRIES_ENDPOINT = '/countries'
+    STATUS_GROUPS_ENDPOINT = '/status_groups'
+    
     def __init__(self):
         self.api_tools = APITools()
-        self.url = '/countries'
-        self.apiKey = current_app.config['API_KEY']
+        
+    def __sendGetRequest(
+        self,
+        endpoint: str,
+        resultsInFile: bool = False,
+        fileName: str = None
+    ):
+        return self.api_tools.get(
+            url = endpoint,
+            resultsInFile=resultsInFile,
+            fileName=fileName
+        ).json()
     
-    def getAllCountries(self, resultsInFile: bool = False) -> list:
-
+    def getAllCountries(
+        self,
+        resultsInFile: bool = False
+    ) -> list:
         fileName = None
         if resultsInFile:
             fileName = 'countries.xlsx'
-        
-        data = self.api_tools.get(
-            url = self.url,
-            headers = {
-                        'fulfilmentcrowd-api-key': self.apiKey
-                      },
+        return self.__sendGetRequest(
+            endpoint = self.COUNTRIES_ENDPOINT,
             resultsInFile=resultsInFile,
             fileName=fileName
         )
-        data = data.json()
-        return data
+    
+    def getAllStatusGroups(
+        self,
+        resultsInFile = None,
+    ) -> list:
+        return self.__sendGetRequest(
+            endpoint = self.STATUS_GROUPS_ENDPOINT,
+            resultsInFile=resultsInFile,
+        )
+        
+    def getStatusForGroup(
+        self,
+        id: int,
+        resultsInFile = None,
+    ) -> list:
+        return self.__sendGetRequest(
+            endpoint = self.STATUS_GROUPS_ENDPOINT + '/' + str(id) + '/statuses',
+            resultsInFile=resultsInFile,
+        )
