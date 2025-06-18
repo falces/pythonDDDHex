@@ -16,6 +16,7 @@ services:
     environment:
       FLASK_DEBUG: 1
       FLASK_APP: ./app.py
+      PYTHONPYCACHEPREFIX: $HOME/.cache/cpython/
     entrypoint:
       - flask
       - run
