@@ -1,5 +1,6 @@
 import requests
 from flask import current_app
+from Shared.Domain.Exceptions.HTTPGetRequestException import HTTPGetRequestException
 
 class APITools:
     def __init__(self):
@@ -7,22 +8,30 @@ class APITools:
     
     def get(
         self,
-        url: str,
+        endpoint: str,
         params: dict = None,
         resultsInFile: bool = False,
         fileName: str = None,
     ) -> requests.Response:        
-        response = requests.get(
-            current_app.config['HOST'] + url,
-            params = params,
-            headers = {
-                        'fulfilmentcrowd-api-key': current_app.config['API_KEY'],
-                      },
-        )
-        if resultsInFile:
-            self.createExcelFromAPIResponse(response.json(), fileName)
-        response.raise_for_status()
-        return response
+        try:
+            response = requests.get(
+                url = current_app.config['HOST'] + endpoint,
+                params = params,
+                headers = {
+                            'fulfilmentcrowd-api-key': current_app.config['API_KEY'],
+                        },
+            )
+            response.raise_for_status()
+            if response.status_code == 200:
+                if resultsInFile:
+                    self.createExcelFromAPIResponse(response.json(), fileName)
+                return response
+        except (requests.exceptions.HTTPError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout,
+                requests.exceptions.RequestException,
+                ) as e:
+            raise HTTPGetRequestException(f"An error occurred: {e}", e.response.status_code)
 
     def post(
         self,
@@ -37,7 +46,6 @@ class APITools:
             json=json,
             headers=headers
         )
-        response.raise_for_status()
         return response
     
     def createExcelFromAPIResponse(

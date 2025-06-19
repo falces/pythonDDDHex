@@ -1,5 +1,6 @@
 from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
 from Shared.Infrastructure.APITools import APITools
+from Shared.Domain.Exceptions.HTTPGetRequestException import HTTPGetRequestException
 
 class FulfilmentCrowdAPIRepository(AbstractCountryRepository):
     COUNTRIES_ENDPOINT = '/countries'
@@ -15,7 +16,7 @@ class FulfilmentCrowdAPIRepository(AbstractCountryRepository):
         fileName: str = None
     ):
         return self.api_tools.get(
-            url = endpoint,
+            endpoint = endpoint,
             resultsInFile=resultsInFile,
             fileName=fileName
         ).json()
