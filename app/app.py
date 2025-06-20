@@ -1,6 +1,5 @@
 from flask import Flask
 from os import environ
-from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
@@ -13,9 +12,9 @@ app.config.update(
 def handle_exception(e):
     response = {
             "error": str(e),
-            "code": e.getCode()
+            "code": e.code
         }
-    return response, e.getCode()
+    return response, e.code
 
 from Infrastructure.Controller.Controller import v1ControllerBase
 from Infrastructure.Controller.ToolsController import toolsController

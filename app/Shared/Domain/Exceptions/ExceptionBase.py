@@ -4,7 +4,7 @@ class ExceptionBase(Exception):
         message: str,
         code: int
     ):
-        super().__init__(self.MESSAGE + message)
+        super().__init__(message)
         self.code = code
         
     def getCode(self) -> int:

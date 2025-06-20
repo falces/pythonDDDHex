@@ -1,9 +1,12 @@
+from Domain.Country.ValueObjects.IdCountry import IdCountry
+from Domain.Country.ValueObjects.CountryCode import CountryCode
+
 class Country:
     def __init__(
         self,
-        id: int,
+        id: IdCountry,
         name: str,
-        code: str,
+        code: CountryCode,
         hasSubzone: bool = False,
         isEUMember: bool = False,
     ):
@@ -15,9 +18,9 @@ class Country:
         
     def toDict(self) -> dict:
         return {
-            "id": self.id,
+            "id": self.id.getValue(),
             "name": self.name,
-            "code": self.code,
+            "code": self.code.getValue(),
             "hasSubzone": self.hasSubzone,
             "isEUMember": self.isEUMember,
         }
