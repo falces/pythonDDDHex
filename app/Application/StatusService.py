@@ -1,10 +1,10 @@
-from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
+from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.Status.Entity.StatusGroup import StatusGroup
 
 class StatusService:
     def __init__(
         self,
-        repository: AbstractCountryRepository,
+        repository: AbstractRepository,
     ):
         self.repository = repository()
         

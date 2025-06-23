@@ -1,8 +1,7 @@
-from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
+from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Shared.Infrastructure.APITools import APITools
-from Shared.Domain.Exceptions.HTTPGetRequestException import HTTPGetRequestException
 
-class FulfilmentCrowdAPIRepository(AbstractCountryRepository):
+class FulfilmentCrowdAPIRepository(AbstractRepository):
     COUNTRIES_ENDPOINT = '/countries'
     STATUS_GROUPS_ENDPOINT = '/status_groups'
     

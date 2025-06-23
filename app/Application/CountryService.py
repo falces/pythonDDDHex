@@ -1,4 +1,4 @@
-from Domain.Country.Repository.AbstractCountryRepository import AbstractCountryRepository
+from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.Country.Entity.Country import Country
 from Domain.Country.ValueObjects.IdCountry import IdCountry
 from Domain.Country.ValueObjects.CountryCode import CountryCode
@@ -6,7 +6,7 @@ from Domain.Country.ValueObjects.CountryCode import CountryCode
 class CountryService:
     def __init__(
         self,
-        countryRepository: AbstractCountryRepository,
+        countryRepository: AbstractRepository,
     ):
         self.countryRepository = countryRepository()
 

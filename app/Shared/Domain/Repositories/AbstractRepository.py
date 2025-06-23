@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class AbstractCountryRepository(ABC):
+class AbstractRepository(ABC):
     
     @abstractmethod
     def getAllCountries(self) -> list:
