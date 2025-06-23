@@ -1,7 +1,5 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 class AbstractRepository(ABC):
-    
-    @abstractmethod
-    def getAllCountries(self) -> list:
-        return []
+    def __init__(self):
+        pass
