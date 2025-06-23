@@ -22,3 +22,18 @@ services:
       - run
       - --host=0.0.0.0
       - --debug
+  db:
+    env_file: .env
+    image: postgres:17.5
+    container_name: ${SERVICE_NAME}_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: 3PL
+    ports:
+      -  ${POSTGRES_PUBLIC_PORT}:${POSTGRES_PRIVATE_PORT}
+volumes:
+  postgres_data:
