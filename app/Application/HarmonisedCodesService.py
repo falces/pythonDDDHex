@@ -1,8 +1,8 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.HarmonisedCodes.HarmonisedCode import HarmonisedCode
 from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
-from app import db
-# import json
+from flask import current_app as app
+
 
 class HarmonisedCodesService:
     def __init__(
@@ -14,9 +14,9 @@ class HarmonisedCodesService:
     def syncHarmonisedCodes(
         self,
     ) -> list:
-        limit = 250
-        offset = 0
-        totalFetched = 0
+        limit = 500
+        offset = 5000
+        totalFetched = 5000
         totalAvailable = float('inf')
 
         while (totalFetched < totalAvailable):
@@ -41,13 +41,13 @@ class HarmonisedCodesService:
                     code = harmonisedCode.code,
                     description = harmonisedCode.description
                 )
-                db.session.add(harmonisedCodeModel)
+                app.db.session.add(harmonisedCodeModel)
 
             paginationInfo = harmonisedCodesResponse['paging_info']
             totalFetched += paginationInfo['fetched']
             totalAvailable = paginationInfo['total']
             offset += totalFetched
 
-            db.session.commit()
+            app.db.session.commit()
 
         return {'message': 'Harmonised codes updated successfully'}, 201

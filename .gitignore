@@ -10,3 +10,4 @@ __pycache__
 *.xls
 *.xlsx
 mysql_data
+*.log

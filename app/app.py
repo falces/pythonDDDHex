@@ -4,6 +4,18 @@ import traceback
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import HTTPException
 from flask_migrate import Migrate
+import logging
+
+logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+rootLogger = logging.getLogger()
+
+fileHandler = logging.FileHandler("{0}/{1}.log".format('./log', 'app'))
+fileHandler.setFormatter(logFormatter)
+rootLogger.addHandler(fileHandler)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(logFormatter)
+rootLogger.addHandler(consoleHandler)
 
 app = Flask(__name__)
 
@@ -12,13 +24,17 @@ app.config.update(
     API_KEY = environ.get('API_KEY')
 )
 
-# mysql_local = 'mysql+mysqlconnector://' + environ.get('MYSQL_USER') + ':' + environ.get('MYSQL_PASSWORD') + '@mysql:3306/ThirdPL'
-mysql_local = 'mysql+mysqlconnector://thirdpl:thirdpl@localhost:13306/ThirdPL'
+
+mysql_local = 'mysql+mysqlconnector://' + environ.get('MYSQL_USER') + ':' + environ.get('MYSQL_PASSWORD') + '@ffc_db:3306/ThirdPL'
+# mysql_local = 'mysql+mysqlconnector://thirdpl:thirdpl@localhost:13306/ThirdPL'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = mysql_local
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
+app.config.db = db
+
+migrate = Migrate(app, db, directory='Shared/Infrastructure/Migrations')
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -26,6 +42,7 @@ def handle_exception(e):
         code = e.code
     else:
         code = 500
+    app.logger.error(str(e))
     response = {
                 "error": str(e),
                 "code": code,

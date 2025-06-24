@@ -10,6 +10,7 @@ et_xmlfile==2.0.0
 Flask==3.1.1
 Flask-Migrate==4.1.0
 Flask-RESTful==0.3.10
+Flask-Script==2.0.6
 Flask-SQLAlchemy==3.1.1
 greenlet==3.2.3
 idna==3.10

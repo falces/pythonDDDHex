@@ -1,5 +1,5 @@
 import requests
-from flask import current_app
+from flask import current_app as app
 from Shared.Domain.Exceptions.HTTPGetRequestException import HTTPGetRequestException
 
 class APITools:
@@ -14,11 +14,13 @@ class APITools:
         fileName: str = None,
     ) -> requests.Response:
         try:
+            url = app.config['HOST'] + endpoint
+            app.logger.info("Request [GET] %s", url)
             response = requests.get(
-                url = current_app.config['HOST'] + endpoint,
+                url = app.config['HOST'] + endpoint,
                 params = params,
                 headers = {
-                            'fulfilmentcrowd-api-key': current_app.config['API_KEY'],
+                            'fulfilmentcrowd-api-key': app.config['API_KEY'],
                         },
             )
             response.raise_for_status()
@@ -41,7 +43,7 @@ class APITools:
         headers: dict = None
     ) -> requests.Response:
         response = requests.post(
-            current_app.config['HOST'] + url,
+            app.config['HOST'] + url,
             data=data,
             json=json,
             headers=headers
