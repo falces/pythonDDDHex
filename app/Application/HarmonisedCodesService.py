@@ -1,8 +1,8 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.HarmonisedCodes.HarmonisedCode import HarmonisedCode
-from Shared.Domain.Entities.EntityBase import EntityBase
+from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
+from app import db
 import json
-
 
 class HarmonisedCodesService:
     def __init__(
@@ -14,54 +14,42 @@ class HarmonisedCodesService:
     def syncHarmonisedCodes(
         self,
     ) -> list:
+        limit = 1
         offset = 0
         totalFetched = 0
         totalAvailable = float('inf')
 
-        mock = {
-                "paging_info": {
-                    "fetched": 2,
-                    "limit": 10,
-                    "total": 2,
-                    "offset": 0
-                },
-                "data": [
-                    {
-                        "id": 38366,
-                        "code": "01000000",
-                        "description": "LIVE ANIMALS"
-                    },
-                    {
-                        "id": 38298,
-                        "code": "01010000",
-                        "description": "Live horses, asses, mules and hinnies"
-                    }
-                ]
-            }
-
         while (totalFetched < totalAvailable):
-            # receivedHarmonisedCodes = self.repository.getAllHarmonisedCodes(
-            #     limit = limit,
-            #     offset = offset,
-            #     resultsInFile = resultsInFile,
-            # )
-            harmonisedCodesResponse = mock
+            harmonisedCodesResponse = self.repository.getAllHarmonisedCodes(
+                limit = limit,
+                offset = offset,
+            )
+            with open("response.txt", "w") as f:
+                json.dump(harmonisedCodesResponse, f, indent=4)
 
             receivedHarmonisedCodes = harmonisedCodesResponse['data']
 
             for receivedHarmonisedCode in receivedHarmonisedCodes:
+                id = receivedHarmonisedCode['id']
+                code = receivedHarmonisedCode['code']
+                description = receivedHarmonisedCode['description']
                 harmonisedCode = HarmonisedCode(
-                    id = receivedHarmonisedCode['id'],
-                    code = receivedHarmonisedCode['code'],
-                    description = receivedHarmonisedCode['description'],
+                    id,
+                    code,
+                    description,
                 )
-                harmonisedCode.add(harmonisedCode.getModel())
+                harmonisedCodeModel = HarmonisedCodesModel(
+                    id = harmonisedCode.id,
+                    code = harmonisedCode.code,
+                    description = harmonisedCode.description
+                )
+                db.session.add(harmonisedCodeModel)
 
             paginationInfo = harmonisedCodesResponse['paging_info']
             totalFetched += paginationInfo['fetched']
             totalAvailable = paginationInfo['total']
             offset += totalFetched
 
-        EntityBase.commit()
+        db.session.commit()
 
-        return json({'message': 'Harmonised codes updated successfully'}), 201
+        return {'message': 'Harmonised codes updated successfully'}, 201

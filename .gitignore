@@ -9,3 +9,4 @@ __pycache__
 .env
 *.xls
 *.xlsx
+mysql_data

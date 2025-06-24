@@ -7,5 +7,5 @@ statusController = Blueprint('statusController', __name__)
 @statusController.route('/', methods=['GET'])
 def getAllStatusGroups():
     resultsInFile = request.args.get('resultsInFile')
-    status = StatusService(FulfilmentCrowdAPIRepository)   
+    status = StatusService(FulfilmentCrowdAPIRepository)
     return status.getAllStatusGroups(resultsInFile)

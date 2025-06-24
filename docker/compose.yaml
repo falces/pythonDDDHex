@@ -4,7 +4,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    container_name: ${SERVICE_NAME}
+    container_name: ${SERVICE_NAME}_app
     working_dir: /src/app
     volumes:
       - ../app:/src/app
@@ -23,17 +23,19 @@ services:
       - --host=0.0.0.0
       - --debug
   db:
-    env_file: .env
-    image: postgres:17.5
+    image: mysql:9.1.0
     container_name: ${SERVICE_NAME}_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_HOST_AUTH_METHOD: trust
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: 3PL
     ports:
-      -  ${POSTGRES_PUBLIC_PORT}:${POSTGRES_PRIVATE_PORT}
-volumes:
-  postgres_data:
+      - ${MYSQL_PUBLIC_PORT}:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      timeout: 20s
+      retries: 3

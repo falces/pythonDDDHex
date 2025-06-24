@@ -5,14 +5,14 @@ from Shared.Domain.Exceptions.HTTPGetRequestException import HTTPGetRequestExcep
 class APITools:
     def __init__(self):
         pass
-    
+
     def get(
         self,
         endpoint: str,
         params: dict = None,
         resultsInFile: bool = False,
         fileName: str = None,
-    ) -> requests.Response:        
+    ) -> requests.Response:
         try:
             response = requests.get(
                 url = current_app.config['HOST'] + endpoint,
@@ -47,7 +47,7 @@ class APITools:
             headers=headers
         )
         return response
-    
+
     def createExcelFromAPIResponse(
         self,
         data: dict,

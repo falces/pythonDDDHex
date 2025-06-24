@@ -1,5 +1,15 @@
-from pydantic import BaseModel
+from typing import Self
+class ModelBase():
+    def add(
+        self,
+        db,
+        model: Self,
+    ):
+        db.session.add(model)
 
+    def getModel(self) -> Self:
+        return self.model
 
-class Model(BaseModel, extra='allow'):
-    """Base class for model objects"""
+    @staticmethod
+    def commit(db):
+        db.session.commit()

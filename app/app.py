@@ -2,6 +2,8 @@ from flask import Flask
 from os import environ
 import traceback
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.exceptions import HTTPException
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -10,20 +12,19 @@ app.config.update(
     API_KEY=environ.get('API_KEY')
 )
 
-dockerURI = 'postgresql://' + environ.get('POSTGRES_USER') + ':' + environ.get('POSTGRES_PASSWORD') + '@' + environ.get('SERVICE_NAME') + '_db:' + environ.get('POSTGRES_PRIVATE_PORT') + '/' + '/' + environ.get('POSTGRES_DATABASE')
-localURI = 'postgresql://' + environ.get('POSTGRES_USER') + ':' + environ.get('POSTGRES_PASSWORD') + '@localhost:' + environ.get('POSTGRES_PUBLIC_PORT') + '/' + '/' + environ.get('POSTGRES_DATABASE')
+mysql_local = 'mysql+mysqlconnector://' + environ.get('MYSQL_USER') + ':' + environ.get('MYSQL_PASSWORD') + '@mysql:3306/ThirdPL'
 
-
-app.config['SQLALCHEMY_DATABASE_URI'] = localURI
+app.config['SQLALCHEMY_DATABASE_URI'] = mysql_local
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    if isinstance(e, (TypeError, AttributeError)):
-        code = 500
-    else:
+    if isinstance(e, (HTTPException)):
         code = e.code
+    else:
+        code = 500
     response = {
                 "error": str(e),
                 "code": code,
