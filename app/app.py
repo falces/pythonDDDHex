@@ -8,11 +8,12 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 
 app.config.update(
-    HOST=environ.get('HOST'),
-    API_KEY=environ.get('API_KEY')
+    HOST = environ.get('HOST'),
+    API_KEY = environ.get('API_KEY')
 )
 
-mysql_local = 'mysql+mysqlconnector://' + environ.get('MYSQL_USER') + ':' + environ.get('MYSQL_PASSWORD') + '@mysql:3306/ThirdPL'
+# mysql_local = 'mysql+mysqlconnector://' + environ.get('MYSQL_USER') + ':' + environ.get('MYSQL_PASSWORD') + '@mysql:3306/ThirdPL'
+mysql_local = 'mysql+mysqlconnector://thirdpl:thirdpl@localhost:13306/ThirdPL'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = mysql_local
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

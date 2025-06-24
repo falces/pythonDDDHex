@@ -2,7 +2,7 @@ from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.HarmonisedCodes.HarmonisedCode import HarmonisedCode
 from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
 from app import db
-import json
+# import json
 
 class HarmonisedCodesService:
     def __init__(
@@ -14,7 +14,7 @@ class HarmonisedCodesService:
     def syncHarmonisedCodes(
         self,
     ) -> list:
-        limit = 1
+        limit = 250
         offset = 0
         totalFetched = 0
         totalAvailable = float('inf')
@@ -24,8 +24,6 @@ class HarmonisedCodesService:
                 limit = limit,
                 offset = offset,
             )
-            with open("response.txt", "w") as f:
-                json.dump(harmonisedCodesResponse, f, indent=4)
 
             receivedHarmonisedCodes = harmonisedCodesResponse['data']
 
@@ -50,6 +48,6 @@ class HarmonisedCodesService:
             totalAvailable = paginationInfo['total']
             offset += totalFetched
 
-        db.session.commit()
+            db.session.commit()
 
         return {'message': 'Harmonised codes updated successfully'}, 201

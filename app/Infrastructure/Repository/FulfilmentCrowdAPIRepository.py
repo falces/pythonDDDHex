@@ -4,7 +4,7 @@ from Shared.Infrastructure.APITools import APITools
 class FulfilmentCrowdAPIRepository(AbstractRepository):
     COUNTRIES_ENDPOINT = '/countries'
     STATUS_GROUPS_ENDPOINT = '/status_groups'
-    HARMONISED_CODES_ENDPOINT = '/status_groups'
+    HARMONISED_CODES_ENDPOINT = '/harmonised_codes'
 
     def __init__(self):
         self.api_tools = APITools()
