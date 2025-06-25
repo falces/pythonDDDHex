@@ -1,4 +1,6 @@
-class Status:
+from Shared.Domain.Entities.EntityBase import EntityBase
+
+class Status(EntityBase):
     def __init__(
         self,
         id: int,
@@ -10,7 +12,7 @@ class Status:
         self.code = code
         self.description = description
         self.shortDescription = shortDescription
-        
+
     def toDict(self) -> dict:
         return {
             "id": self.id,
@@ -18,6 +20,6 @@ class Status:
             "description": self.description,
             "shortDescription": self.shortDescription
         }
-    
+
     def getId(self) -> int:
         return self.id

@@ -9,3 +9,9 @@ def getAllStatusGroups():
     resultsInFile = request.args.get('resultsInFile')
     status = StatusService(FulfilmentCrowdAPIRepository)
     return status.getAllStatusGroups(resultsInFile)
+
+@statusController.route('/', methods=['POST'])
+def imporptAllStatusGroups():
+    resultsInFile = request.args.get('resultsInFile')
+    status = StatusService(FulfilmentCrowdAPIRepository)
+    return status.importAllStatusGroups(resultsInFile)

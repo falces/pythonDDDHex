@@ -7,8 +7,14 @@ class StatusService:
         repository: AbstractRepository,
     ):
         self.repository = repository()
-        
+
     def getAllStatusGroups(
+        self,
+        resultsInFile: bool = False,
+    ) -> list:
+        pass
+
+    def importAllStatusGroups(
         self,
         resultsInFile: bool = False,
     ) -> list:
@@ -21,7 +27,7 @@ class StatusService:
                 description = statusGroupReceived['description'],
                 status = [],
             )
-            
+
             statusesReceived = self.repository.getStatusForGroup(statusGroupReceived['id'], resultsInFile)
             for statusReceived in statusesReceived:
                 statusGroup.addStatus(
@@ -30,7 +36,7 @@ class StatusService:
                     description=statusReceived["description"],
                     shortDescription=statusReceived["short_description"],
                 )
-                
+
             statusGroup = statusGroup.toDict()
             statusGroups.append(statusGroup)
         return statusGroups
