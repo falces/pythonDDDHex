@@ -1,7 +1,8 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.HarmonisedCodes.HarmonisedCode import HarmonisedCode
 from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
-from flask import current_app
+# from flask import current_app
+from app import db
 
 
 class HarmonisedCodesService:
@@ -41,13 +42,13 @@ class HarmonisedCodesService:
                     code = harmonisedCode.code,
                     description = harmonisedCode.description
                 )
-                current_app.db.session.add(harmonisedCodeModel)
+                db.session.add(harmonisedCodeModel)
 
             paginationInfo = harmonisedCodesResponse['paging_info']
             totalFetched += paginationInfo['fetched']
             totalAvailable = paginationInfo['total']
             offset += totalFetched
 
-            current_app.db.session.commit()
+            db.session.commit()
 
         return {'message': 'Harmonised codes updated successfully'}, 201
