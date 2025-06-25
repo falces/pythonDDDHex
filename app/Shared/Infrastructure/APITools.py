@@ -14,8 +14,6 @@ class APITools:
         fileName: str = None,
     ) -> requests.Response:
         try:
-            url = app.config['HOST'] + endpoint
-            app.logger.info("Request [GET] %s", url)
             response = requests.get(
                 url = app.config['HOST'] + endpoint,
                 params = params,

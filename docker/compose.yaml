@@ -12,22 +12,18 @@ services:
       - ${PUBLIC_HTTP_PORT}:${PRIVATE_HTTP_PORT}
     stdin_open: true
     tty: true
-    # command: python -B app.py
+    entrypoint: /bin/sh /src/init.sh
+    depends_on:
+      - db
     environment:
       FLASK_DEBUG: 1
       FLASK_APP: ./app.py
       PYTHONPYCACHEPREFIX: $HOME/.cache/cpython/
-    entrypoint:
-      - flask
-      - run
-      - --host=0.0.0.0
-      - --debug
   db:
     image: mysql:9.1.0
     container_name: ${SERVICE_NAME}_db
     ports:
       - ${MYSQL_PUBLIC_PORT}:3306
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
