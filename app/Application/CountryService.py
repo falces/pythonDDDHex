@@ -20,6 +20,8 @@ class GetCountryService:
         allCountries = CountryModel.query.all()
         countries = []
 
+        app.logger.info("Total countries retrieved from database: %s", len(allCountries))
+
         for country in allCountries:
             countries.append(country.toDict())
 
