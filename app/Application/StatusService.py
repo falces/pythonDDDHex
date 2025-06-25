@@ -1,5 +1,5 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.Status.Entity.StatusGroup import StatusGroup
+from Domain.StatusGroups.StatusGroup import StatusGroup
 
 class StatusService:
     def __init__(
