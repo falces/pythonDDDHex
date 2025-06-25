@@ -1,4 +1,5 @@
 from Shared.Domain.Entities.EntityBase import EntityBase
+from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
 
 
 class HarmonisedCode(EntityBase):
@@ -11,6 +12,13 @@ class HarmonisedCode(EntityBase):
         self.id = id
         self.code = code
         self.description = description
+
+        self.model = HarmonisedCodesModel(
+            id=self.id,
+            code=self.code,
+            description=self.description,
+        )
+
 
     def toDict(self) -> dict:
         return {

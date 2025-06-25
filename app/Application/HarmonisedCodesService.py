@@ -4,7 +4,29 @@ from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
 from app import db, app
 
 
-class HarmonisedCodesService:
+class GetHarmonisedCodesService:
+    def __init__(
+        self,
+        repository: AbstractRepository,
+    ):
+        self.repository = repository()
+
+    def getAllHarmonisedCodes(
+        self,
+        resultsInFile: bool = False,
+    ) -> list:
+
+        allHarmonisedCodes = HarmonisedCodesModel.query.all()
+        harmonisedCodes = []
+
+        app.logger.info("Total harmonised codes retrieved from database: %s", len(allHarmonisedCodes))
+
+        for harmonisedCode in allHarmonisedCodes:
+            harmonisedCodes.append(harmonisedCode.toDict())
+
+        return harmonisedCodes
+
+class ImportHarmonisedCodesService:
     def __init__(
         self,
         repository: AbstractRepository,
@@ -46,12 +68,8 @@ class HarmonisedCodesService:
                     code,
                     description,
                 )
-                harmonisedCodeModel = HarmonisedCodesModel(
-                    id = harmonisedCode.id,
-                    code = harmonisedCode.code,
-                    description = harmonisedCode.description
-                )
-                db.session.add(harmonisedCodeModel)
+
+                db.session.add(harmonisedCode.model)
                 db.session.commit()
 
             offset += limit
