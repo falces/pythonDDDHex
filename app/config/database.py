@@ -12,6 +12,7 @@ def configureDatabase(app: Flask):
 
     db = SQLAlchemy(app)
     app.config.db = db
+
     Migrate(
         app,
         app.config.db,
