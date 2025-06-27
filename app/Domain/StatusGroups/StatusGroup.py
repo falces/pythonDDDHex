@@ -1,5 +1,6 @@
 from typing import Self
 from Domain.StatusGroups.Entity.Status import Status
+from Domain.StatusGroups.StatusGroupModel import StatusGroupModel
 from Shared.Domain.Entities.EntityBase import AggregateRootBase
 
 
@@ -16,6 +17,12 @@ class StatusGroup(AggregateRootBase):
         self.description = description
         self.status = status
 
+        self.model = StatusGroupModel(
+            id = self.id,
+            group_key = self.key,
+            description = self.description,
+        )
+
     def getId(self) -> int:
         return self.id
 
@@ -26,15 +33,7 @@ class StatusGroup(AggregateRootBase):
         return statusIds
 
     def toDict(self) -> dict:
-        statusGroup = {
-            "id": self.id,
-            "key": self.key,
-            "description": self.description,
-            "status": [],
-        }
-        for status in self.status:
-            statusGroup['status'].append(status.toDict())
-        return statusGroup
+        return self.model.toDict()
 
     def addStatus(
         self,

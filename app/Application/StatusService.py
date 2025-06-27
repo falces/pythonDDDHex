@@ -1,5 +1,6 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.StatusGroups.StatusGroup import StatusGroup
+from app import db
 
 class StatusService:
     def __init__(
@@ -28,14 +29,20 @@ class StatusService:
                 status = [],
             )
 
-            statusesReceived = self.repository.getStatusForGroup(statusGroupReceived['id'], resultsInFile)
-            for statusReceived in statusesReceived:
-                statusGroup.addStatus(
-                    id=statusReceived["id"],
-                    code=statusReceived["code"],
-                    description=statusReceived["description"],
-                    shortDescription=statusReceived["short_description"],
-                )
+            try:
+                statusesReceived = self.repository.getStatusForGroup(statusGroupReceived['id'], resultsInFile)
+                for statusReceived in statusesReceived:
+                    statusGroup.addStatus(
+                        id=statusReceived["id"],
+                        code=statusReceived["code"],
+                        description=statusReceived["description"],
+                        shortDescription=statusReceived["short_description"],
+                    )
+            except Exception as e:
+                pass
+
+            db.session.add(statusGroup.model)
+            db.session.commit()
 
             statusGroup = statusGroup.toDict()
             statusGroups.append(statusGroup)
