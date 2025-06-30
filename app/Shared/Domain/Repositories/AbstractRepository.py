@@ -7,3 +7,7 @@ class AbstractRepository(ABC):
     @abstractmethod
     def save(self):
         pass
+
+    @abstractmethod
+    def findById(self):
+        pass

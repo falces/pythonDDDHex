@@ -22,7 +22,6 @@ class Status(EntityBase):
             code = self.code,
             description = self.description,
             short_description = self.shortDescription,
-            status_group_id = self.statusGroupId
         )
 
     def toDict(self) -> dict:

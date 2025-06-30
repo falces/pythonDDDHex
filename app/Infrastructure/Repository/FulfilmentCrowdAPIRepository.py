@@ -12,6 +12,9 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
     def save(self):
         pass
 
+    def findById(self):
+        pass
+
     def __sendGetRequest(
         self,
         endpoint: str,
