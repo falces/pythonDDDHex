@@ -11,8 +11,8 @@ statusController = Blueprint('statusController', __name__)
 @statusController.route('/', methods=['GET'])
 def getAllStatusGroups():
     resultsInFile = request.args.get('resultsInFile')
-    status = StatusService(FulfilmentCrowdAPIRepository)
-    return status.getAllStatusGroups(resultsInFile)
+    statusService = StatusService(StatusGroupRepository)
+    return statusService.getAllStatusGroups(resultsInFile)
 
 @statusController.route('/', methods=['POST'])
 def imporptAllStatusGroups():

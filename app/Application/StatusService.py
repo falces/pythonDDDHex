@@ -16,7 +16,18 @@ class StatusService:
         self,
         resultsInFile: bool = False,
     ) -> list:
-        pass
+        statusGroups  = self.repository.findAll()
+
+        for statusGroup in statusGroups:
+            statusGroup.statuses = []
+            statuses = self.repository.findStatusesIdsByStatusGroupId(statusGroup.id)
+            for status in statuses:
+                status = self.repository.findStatusById(status.status_id)
+                statusGroup.statuses.append(status)
+
+        return [statusGroup.toDict() for statusGroup in statusGroups]
+
+
 
     def addStatusGroup(
         self,

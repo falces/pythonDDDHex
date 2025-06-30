@@ -2,9 +2,15 @@ from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.StatusGroups.StatusGroup import StatusGroup
 from Domain.StatusGroups.Entity.Status import Status
 from Domain.StatusGroups.StatusGroupToStatus import StatusGroupToStatus
+from Domain.StatusGroups.StatusGroupToStatusModel import StatusGroupToStatusModel
+from Domain.StatusGroups.Entity.StatusModel import StatusModel
 from app import db
+from Domain.StatusGroups.StatusGroupModel import StatusGroupModel
+
 
 class StatusGroupRepository(AbstractRepository):
+    def __init__(self):
+        self.model = StatusGroupModel()
 
     def save(
         self,
@@ -12,7 +18,7 @@ class StatusGroupRepository(AbstractRepository):
     ):
         db.session.add(StatusGroup.getModel())
         for status in StatusGroup.statuses:
-            if not self.findById(status, status.id):
+            if not self.findStatusById(status.id):
                 db.session.add(status.getModel())
 
             statusGroupToStatus = StatusGroupToStatus(
@@ -24,12 +30,16 @@ class StatusGroupRepository(AbstractRepository):
                 db.session.add(statusGroupToStatus.model)
         db.session.commit()
 
-    def findById(
+    def findAll(
         self,
-        status: Status,
+    ) -> list:
+        return self.model.query.all()
+
+    def findStatusById(
+        self,
         id: int,
     ) -> StatusGroup:
-        return status.model.query.filter_by(id=id).first()
+        return StatusModel.query.filter_by(id=id).first()
 
     def findRelation(
         self,
@@ -38,3 +48,11 @@ class StatusGroupRepository(AbstractRepository):
         statusId: int,
     ) -> StatusGroupToStatus:
         return statusGroupToStatus.getModel().query.filter_by(status_group_id=statusGroupId, status_id=statusId).first()
+
+    def findStatusesIdsByStatusGroupId(
+        self,
+        statusGroupId: int,
+    ) -> list:
+        return StatusGroupToStatusModel.query.filter_by(
+            status_group_id = statusGroupId
+        ).all()

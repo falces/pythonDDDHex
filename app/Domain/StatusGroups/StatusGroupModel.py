@@ -29,8 +29,12 @@ class StatusGroupModel(db.Model):
     )
 
     def toDict(self):
+        statuses = []
+        for status in self.status:
+            statuses.append(status.toDict())
         return {
             'id': self.id,
             'group_key': self.group_key,
             'description': self.description,
-            }
+            'statuses': statuses,
+        }
