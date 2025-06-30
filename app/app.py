@@ -3,10 +3,12 @@ from config.database import configureDatabase
 from config.environment import configureEnvironment
 from config.exceptionHanlder import exceptionHandler
 from config.log import configureLogs
+from config.signals import configureSignals
 
 app = Flask(__name__)
 
 configureLogs(app)
+signals = configureSignals(app)
 configureEnvironment(app)
 db = configureDatabase(app)
 exceptionHandler(app)

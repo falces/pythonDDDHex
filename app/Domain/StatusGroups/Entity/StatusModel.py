@@ -6,7 +6,7 @@ class StatusModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(20), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=False)
-    shor_description = db.Column(db.String(100), unique=False, nullable=False)
+    short_description = db.Column(db.String(100), unique=False, nullable=False)
     status_group_id = db.Column(db.Integer, db.ForeignKey('status_groups.id'))
     status_group = db.relationship('StatusGroupModel', back_populates='status')
 
@@ -15,5 +15,6 @@ class StatusModel(db.Model):
             'id': self.id,
             'code': self.code,
             'description': self.description,
-            'shor_description': self.shor_description
+            'short_description': self.short_description,
+            'status_group_id': self.status_group_id,
         }

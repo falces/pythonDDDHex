@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-class AbstractRepository(ABC):
+
+class AbstractEntityRepository(ABC):
     def __init__(self):
         pass
 

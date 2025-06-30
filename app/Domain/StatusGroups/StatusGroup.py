@@ -10,12 +10,21 @@ class StatusGroup(AggregateRootBase):
         id: int,
         key: str,
         description: str,
-        status: dict = [],
+        statuses: dict = [],
     ):
         self.id = id
         self.key = key
         self.description = description
-        self.status = status
+        self.statuses = []
+
+        for status in statuses:
+            self.addStatus(
+                id = status['id'],
+                code = status['code'],
+                description = status['description'],
+                shortDescription = status['shortDescription'],
+                statusGroupId = status['statusGroupId'],
+            )
 
         self.model = StatusGroupModel(
             id = self.id,
@@ -28,7 +37,7 @@ class StatusGroup(AggregateRootBase):
 
     def getStatus(self) -> list:
         statusIds = []
-        for status in self.status:
+        for status in self.statuses:
             statusIds.append(status.getId())
         return statusIds
 
@@ -41,12 +50,14 @@ class StatusGroup(AggregateRootBase):
         code: str,
         description: str,
         shortDescription: str,
+        statusGroupId = int,
     ) -> Self:
         status = Status(
             id,
             code,
             description,
             shortDescription,
+            statusGroupId,
         )
-        self.status.append(status)
+        self.statuses.append(status)
         return Self

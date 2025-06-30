@@ -9,17 +9,20 @@ class Status(EntityBase):
         code: str,
         description: str,
         shortDescription: str,
+        statusGroupId: int,
     ):
         self.id = id
         self.code = code
         self.description = description
         self.shortDescription = shortDescription
+        self.statusGroupId = statusGroupId
 
         self.model = StatusModel(
             id = self.id,
             code = self.code,
             description = self.description,
-            shor_description = self.shortDescription,
+            short_description = self.shortDescription,
+            status_group_id = self.statusGroupId
         )
 
     def toDict(self) -> dict:
@@ -27,7 +30,8 @@ class Status(EntityBase):
             "id": self.id,
             "code": self.code,
             "description": self.description,
-            "shortDescription": self.shortDescription
+            "shortDescription": self.shortDescription,
+            "statusGroupId": self.statusGroupId,
         }
 
     def getId(self) -> int:

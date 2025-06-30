@@ -9,6 +9,9 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
     def __init__(self):
         self.api_tools = APITools()
 
+    def save(self):
+        pass
+
     def __sendGetRequest(
         self,
         endpoint: str,
