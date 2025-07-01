@@ -2,43 +2,50 @@ from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.Country.Country import Country
 from Domain.Country.ValueObjects.IdCountry import IdCountry
 from Domain.Country.ValueObjects.CountryCode import CountryCode
-from app import db, app
+from app import db, app, signals
 from Domain.Country.CountryModel import CountryModel
+import uuid
+from Domain.Country import CountryDTO
 
-class GetCountryService:
+class CountryService:
     def __init__(
         self,
-        countryRepository: AbstractRepository,
+        repository: AbstractRepository,
     ):
-        self.countryRepository = countryRepository()
+        self.repository = repository()
+
+    def addCountry(
+        self,
+        countryDTO: CountryDTO,
+    ):
+        country = Country(
+            id =         IdCountry.create(countryDTO.id),
+            name =       countryDTO.name,
+            code =       CountryCode.create(countryDTO.code),
+            hasSubzone = countryDTO.hasSubzone,
+            isEUMember = countryDTO.isEUMember,
+        )
+
+        self.repository.save(country)
 
     def getAllCountries(
         self,
         resultsInFile: bool = False,
     ) -> list:
-
-        allCountries = CountryModel.query.all()
-        countries = []
-
+        allCountries = self.repository.findAll()
         app.logger.info("Total countries retrieved from database: %s", len(allCountries))
 
+        countries = []
         for country in allCountries:
             countries.append(country.toDict())
 
         return countries
 
-class PostCountryService:
-    def __init__(
-        self,
-        countryRepository: AbstractRepository,
-    ):
-        self.countryRepository = countryRepository()
-
-    def importAllCountries(
+    def importCountries(
         self,
         resultsInFile: bool = False,
     ) -> list:
-        receivedCountries = self.countryRepository.getAllCountries(resultsInFile)
+        receivedCountries = self.repository.getAllCountries(resultsInFile)
         countries = []
         for receivedCountry in receivedCountries:
             country = Country(
@@ -49,9 +56,11 @@ class PostCountryService:
                 isEUMember = receivedCountry['eu_member'],
             )
 
-            db.session.add(country.model)
-            db.session.commit()
+            signals['new_country'].send(
+                sender=uuid.uuid4().hex,
+                message=country.toDict(),
+            )
 
             countries.append(country.toDict())
         app.logger.info("Total countries imported: %s", len(countries))
-        return {'message': str(len(countries)) + ' Countries updated successfully'}, 201
+        return countries

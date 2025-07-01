@@ -5,6 +5,7 @@ from config.exceptionHanlder import exceptionHandler
 from config.log import configureLogs
 from config.signals import configureSignals
 
+
 app = Flask(__name__)
 
 configureLogs(app)
