@@ -14,7 +14,7 @@ def getAllStatusGroups():
     statusService = StatusService(StatusGroupRepository)
     return statusService.getAllStatusGroups(resultsInFile)
 
-@statusController.route('/', methods=['POST'])
+@statusController.route('/import', methods=['POST'])
 def imporptAllStatusGroups():
     resultsInFile = request.args.get('resultsInFile')
     status = StatusService(FulfilmentCrowdAPIRepository)
