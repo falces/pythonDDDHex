@@ -2,7 +2,7 @@ from flask import Blueprint, request, make_response
 from Application.CountryService import CountryService
 from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from app import signals
-from Domain.Country.CountryDTO import CountryDTO
+from Application.DTO.CountryDTO import CountryDTO
 from Infrastructure.Repository.CountryRepository import CountryRepository
 from Infrastructure.Controller.ControllerBase import ControllerBase
 
@@ -18,7 +18,7 @@ class CountryController():
         return ControllerBase.formatResponse(
             countryService.getAllCountries(resultsInFile),
             200,
-            )
+        )
 
     @countryController.route('/import', methods=['POST'])
     def postAllCountries():

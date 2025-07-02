@@ -3,9 +3,8 @@ from Domain.Country.Country import Country
 from Domain.Country.ValueObjects.IdCountry import IdCountry
 from Domain.Country.ValueObjects.CountryCode import CountryCode
 from app import db, app, signals
-from Domain.Country.CountryModel import CountryModel
 import uuid
-from Domain.Country import CountryDTO
+from Application.DTO import CountryDTO
 
 class CountryService:
     def __init__(

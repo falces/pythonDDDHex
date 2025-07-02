@@ -1,7 +1,7 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from Domain.StatusGroups.StatusGroup import StatusGroup
-from Domain.StatusGroups.StatusGroupDTO import StatusGroupDTO
-from Domain.StatusGroups.StatusDTO import StatusDTO
+from Application.DTO.StatusGroupDTO import StatusGroupDTO
+from Application.DTO.StatusDTO import StatusDTO
 from app import signals
 import uuid
 

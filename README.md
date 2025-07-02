@@ -30,3 +30,8 @@ The application requires Docker Desktop to run. In the folder ./docker you can f
 ## Start the application
 
 # Development
+
+Basic flow
+
+![image-20250702104815934](.\README.assets\image-20250702104815934.png)
+

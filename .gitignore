@@ -11,3 +11,4 @@ __pycache__
 *.xlsx
 mysql_data
 *.log
+*.drawio.bkp

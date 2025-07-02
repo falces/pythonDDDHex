@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from Application.StatusService import StatusService
 from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from Infrastructure.Repository.StatusGroupRepository import StatusGroupRepository
-from Domain.StatusGroups.StatusGroupDTO import StatusGroupDTO
+from Application.DTO.StatusGroupDTO import StatusGroupDTO
 from app import signals
 
 statusController = Blueprint('statusController', __name__)
