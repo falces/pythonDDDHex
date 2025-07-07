@@ -18,7 +18,7 @@ class StatusGroupRepository(AbstractRepository):
     ):
         db.session.add(StatusGroup.getModel())
         for status in StatusGroup.statuses:
-            if not self.findStatusById(status.id):
+            if not self.findById(status.id):
                 db.session.add(status.getModel())
 
             statusGroupToStatus = StatusGroupToStatus(
@@ -35,7 +35,7 @@ class StatusGroupRepository(AbstractRepository):
     ) -> list:
         return self.model.query.all()
 
-    def findStatusById(
+    def findById(
         self,
         id: int,
     ) -> StatusGroup:

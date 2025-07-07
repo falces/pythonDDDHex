@@ -22,7 +22,7 @@ class StatusService:
             statusGroup.statuses = []
             statuses = self.repository.findStatusesIdsByStatusGroupId(statusGroup.id)
             for status in statuses:
-                status = self.repository.findStatusById(status.status_id)
+                status = self.repository.findById(status.status_id)
                 statusGroup.statuses.append(status)
 
         return [statusGroup.toDict() for statusGroup in statusGroups]

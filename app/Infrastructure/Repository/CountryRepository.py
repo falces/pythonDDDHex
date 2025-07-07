@@ -20,7 +20,7 @@ class CountryRepository (AbstractRepository):
     ) -> list:
         return self.model.query.all()
 
-    def findStatusById(
+    def findById(
         self,
         id: int,
     ) -> Country:

@@ -9,5 +9,9 @@ class AbstractRepository(ABC):
         pass
 
     @abstractmethod
-    def findStatusById(self):
+    def findById(self):
+        pass
+
+    @abstractmethod
+    def findAll(self):
         pass
