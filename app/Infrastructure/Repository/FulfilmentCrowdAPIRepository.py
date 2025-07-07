@@ -12,7 +12,7 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
     def save(self):
         pass
 
-    def findStatusById(self):
+    def findAll(self):
         pass
 
     def __sendGetRequest(
