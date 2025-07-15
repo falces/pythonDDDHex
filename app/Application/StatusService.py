@@ -70,7 +70,7 @@ class StatusService:
             except Exception as e:
                 pass
 
-            signals['new_status_group'].send(
+            signals['new_status_group_received'].send(
                 sender=uuid.uuid4().hex,
                 message=statusGroup,
             )

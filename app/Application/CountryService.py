@@ -55,7 +55,7 @@ class CountryService:
                 isEUMember = receivedCountry['eu_member'],
             )
 
-            signals['new_country'].send(
+            signals['new_country_received'].send(
                 sender=uuid.uuid4().hex,
                 message=country.toDict(),
             )

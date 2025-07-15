@@ -8,7 +8,7 @@ countrySignalListener = Blueprint('countrySignalListener', __name__)
 
 class CountrySignalListener():
 
-    @signals['new_country'].connect
+    @signals['new_country_received'].connect
     def newCountryListener(
         self,
         sender: str,

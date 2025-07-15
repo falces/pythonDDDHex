@@ -8,7 +8,7 @@ statusSignalListener = Blueprint('statusSignalListener', __name__)
 
 class StatusSignalListener():
 
-    @signals['new_status_group'].connect
+    @signals['new_status_group_received'].connect
     def newStatusGroupListener(
         self,
         sender: str,

@@ -5,6 +5,6 @@ def configureSignals(app: Flask):
     namespace = Namespace()
 
     return {
-        "new_status_group": namespace.signal("new_status_group"),
-        "new_country": namespace.signal("new_country"),
+        "new_status_group_received": namespace.signal("new_status_group"),
+        "new_country_received": namespace.signal("new_country"),
     }
