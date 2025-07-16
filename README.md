@@ -29,6 +29,14 @@ The application requires Docker Desktop to run. In the folder ./docker you can f
 
 ## Start the application
 
+Create network
+
+```bash
+docker network create common_network
+```
+
+
+
 # Development
 
 Basic flow
