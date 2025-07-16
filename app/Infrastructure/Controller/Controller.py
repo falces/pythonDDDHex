@@ -4,6 +4,7 @@ from Infrastructure.Controller.StatusController import statusController
 from Infrastructure.Controller.HarmonisedCodesController import harmonisedCodesController
 from Infrastructure.Controller.SignalListener.CountrySignalListener import countrySignalListener
 from Infrastructure.Controller.SignalListener.StatusSignalListener import statusSignalListener
+from Infrastructure.Controller.SignalListener.RabbitMQListener import rabbitMQSignalListener
 
 
 v1ControllerBase = Blueprint('v1', __name__)
@@ -14,3 +15,4 @@ v1ControllerBase.register_blueprint(harmonisedCodesController, url_prefix='/harm
 
 v1ControllerBase.register_blueprint(countrySignalListener)
 v1ControllerBase.register_blueprint(statusSignalListener)
+v1ControllerBase.register_blueprint(rabbitMQSignalListener)

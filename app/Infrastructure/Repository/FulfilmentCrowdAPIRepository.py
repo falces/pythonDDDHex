@@ -15,6 +15,9 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
     def findAll(self):
         pass
 
+    def findById(self):
+        pass
+
     def __sendGetRequest(
         self,
         endpoint: str,

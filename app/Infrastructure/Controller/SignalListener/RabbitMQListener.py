@@ -1,0 +1,72 @@
+from app import signals
+from flask import Blueprint
+import pika
+import datetime
+
+rabbitMQSignalListener = Blueprint('rabbitMQSignalListener', __name__)
+
+class RabbitConnection():
+
+    def connect(self):
+        rabbitmq_host = 'rabbitmq'
+        rabbitmq_port = 5672
+        rabbitmq_vhost = '/'
+        rabbitmq_user = 'guest'
+        rabbitmq_password = 'guest'
+
+        credentials = pika.PlainCredentials(rabbitmq_user, rabbitmq_password)
+
+        parameters = pika.ConnectionParameters(
+                host=rabbitmq_host,
+                port=rabbitmq_port,
+                virtual_host=rabbitmq_vhost,
+                credentials=credentials
+            )
+
+        self.connection = pika.BlockingConnection(
+            parameters
+        )
+
+        channel = self.connection.channel()
+        channel.queue_declare(queue='3plapi')
+
+        return channel
+
+    def close(self):
+        self.connection.close()
+
+    def createMessage(
+        self,
+        sender: str,
+        message: dict,
+    ) -> str:
+        content = {
+            'id': sender,
+            'datetime': datetime.datetime.now().isoformat(),
+            'data': message,
+        }
+
+        return str(content)
+
+
+class RabbitMQSignalListener():
+
+    @signals['new_country_created'].connect
+    def newRabbitMQMessage(
+        self,
+        sender: str,
+        message: dict,
+    ):
+        rabbit = RabbitConnection()
+        channel = rabbit.connect()
+
+        channel.basic_publish(
+            exchange = '',
+            routing_key = '3plapi',
+            body = rabbit.createMessage(
+                sender,
+                message,
+            ),
+        )
+
+        rabbit.close()

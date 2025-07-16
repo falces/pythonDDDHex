@@ -27,6 +27,11 @@ class CountryService:
 
         self.repository.save(country)
 
+        signals['new_country_created'].send(
+            sender=uuid.uuid4().hex,
+            message=country.toDict(),
+        )
+
     def getAllCountries(
         self,
         resultsInFile: bool = False,
