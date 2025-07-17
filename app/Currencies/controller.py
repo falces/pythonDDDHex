@@ -17,6 +17,14 @@ def importAllCurrencies():
         ) + ' Currencies imported successfully'
     }, 201
 
+@currenciesController.route('/', methods=['GET'])
+def getAllCurrencies():
+    return {
+        'currencies': [
+            currency.toDict() for currency in CurrencyRepository().findAll()
+        ]
+    }, 200
+
 @signals['new_currency_received'].connect
 def newCurrencyReceived(
     self,
