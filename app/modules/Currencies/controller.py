@@ -9,10 +9,11 @@ currenciesController = Blueprint('currenciesController', __name__)
 
 @currenciesController.route('/import', methods=['POST'])
 def importAllCurrencies():
+    repository = FulfilmentCrowdAPIRepository()
     return {
         'message': str(
             len(
-                importCurrenciesService(FulfilmentCrowdAPIRepository())
+                importCurrenciesService(repository)
             )
         ) + ' Currencies imported successfully'
     }, 201

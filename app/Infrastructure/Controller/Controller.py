@@ -5,7 +5,7 @@ from Infrastructure.Controller.HarmonisedCodesController import harmonisedCodesC
 from Infrastructure.Controller.SignalListener.CountrySignalListener import countrySignalListener
 from Infrastructure.Controller.SignalListener.StatusSignalListener import statusSignalListener
 from Infrastructure.Controller.SignalListener.RabbitMQListener import rabbitMQSignalListener
-from Currencies.controller import currenciesController
+from modules.Currencies.controller import currenciesController
 
 
 
