@@ -1,5 +1,5 @@
 from .valueObjects import *
-from Shared.Domain.Entities.EntityBase import AggregateRootBase
+from Shared.Domain.Entities.EntityBase import AggregateRootBase, EntityBase
 from app import db
 
 class Country(AggregateRootBase):
@@ -44,4 +44,34 @@ class CountryModel(db.Model):
             "code": self.code,
             "hasSubzone": self.hasSubzone,
             "isEUMember": self.isEUMember,
+        }
+
+class CountriesToCurrencies(EntityBase):
+    def __init__(
+        self,
+        country: str,
+        currency: str,
+    ):
+        self.country = country
+        self.currency = currency
+        self.model = CountryToCurrenciesModel(
+            country=self.country,
+            currency=self.currency,
+        )
+
+    def toDict(self) -> dict:
+        return self.model.toDict()
+
+class CountryToCurrenciesModel(db.Model):
+    __tablename__ = 'countries_to_currencies'
+
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String(3), unique=True, nullable=False)
+    currency = db.Column(db.String(3), unique=False, nullable=True)
+
+    def toDict(self) -> dict:
+        return {
+            "id": self.id,
+            "country": self.country,
+            "currency": self.currency,
         }
