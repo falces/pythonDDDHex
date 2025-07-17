@@ -5,6 +5,7 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
     COUNTRIES_ENDPOINT = '/countries'
     STATUS_GROUPS_ENDPOINT = '/status_groups'
     HARMONISED_CODES_ENDPOINT = '/harmonised_codes'
+    CURRENCIES_ENDPOINT = '/currencies'
 
     def __init__(self):
         self.api_tools = APITools()
@@ -81,4 +82,11 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
             },
             resultsInFile=resultsInFile,
             fileName=fileName
+        )
+
+    def getCurrencies(
+        self,
+    ) -> list:
+        return self.__sendGetRequest(
+            endpoint = self.CURRENCIES_ENDPOINT,
         )
