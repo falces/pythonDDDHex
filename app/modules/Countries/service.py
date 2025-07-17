@@ -1,10 +1,9 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.Country.Country import Country
-from Domain.Country.ValueObjects.IdCountry import IdCountry
-from Domain.Country.ValueObjects.CountryCode import CountryCode
+from modules.Countries.entities import Country
+from .valueObjects import *
 from app import app, signals
 import uuid
-from Application.DTO import CountryDTO
+from .dto import CountryDTO
 
 class CountryService:
     def __init__(

@@ -1,5 +1,6 @@
 from Shared.Domain.ValueObjects.StringValueObject import StringValueObject
-from Domain.Country.Exceptions.IncorrectCountryCodeException import IncorrectCountryCodeException
+from Shared.Domain.ValueObjects.IdValueObject import IdValueobject
+from .exceptions import *
 from typing import Self
 
 class CountryCode(StringValueObject):
@@ -9,7 +10,7 @@ class CountryCode(StringValueObject):
     ):
         if len(value) != 2:
             raise IncorrectCountryCodeException(value)
-        
+
         super().__init__(value = value)
 
     @staticmethod
@@ -17,3 +18,13 @@ class CountryCode(StringValueObject):
         value: str,
     ) -> Self:
         return CountryCode(value)
+
+class IdCountry(IdValueobject):
+    def __init__(self, value):
+        super().__init__(value)
+
+    @staticmethod
+    def create(
+        value: id,
+    ) -> Self:
+        return IdCountry(value)

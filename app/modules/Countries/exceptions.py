@@ -1,5 +1,6 @@
 from Shared.Domain.Exceptions.IncorrectValueException import IncorrectValueException
 
+
 class IncorrectCountryCodeException(IncorrectValueException):
     def __init__(
         self,

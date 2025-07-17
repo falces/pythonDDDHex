@@ -1,6 +1,6 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.Country.CountryModel import CountryModel
-from Domain.Country.Country import Country
+from .entities import Country, CountryModel
+from modules.Countries.entities import Country
 from app import db
 
 

@@ -1,8 +1,11 @@
 from app import app, signals
+from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 import uuid
 from .entities import Currency
 
-def importCurrenciesService(repository) -> list:
+def importCurrenciesService(
+    repository: AbstractRepository,
+) -> list:
     providerCurrencies = repository.getCurrencies()
     currencies = []
     for providerCurrency in providerCurrencies:
@@ -23,7 +26,7 @@ def importCurrenciesService(repository) -> list:
     return currencies
 
 def saveCurrency(
-    repository,
+    repository: AbstractRepository,
     currencyDTO: list,
 ):
     currency = Currency(
