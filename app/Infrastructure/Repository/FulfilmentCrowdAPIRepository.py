@@ -55,7 +55,7 @@ class FulfilmentCrowdAPIRepository(AbstractRepository):
             resultsInFile=resultsInFile,
         )
 
-    def getStatusForGroup(
+    def getStatusByStatusGroup(
         self,
         id: int,
         resultsInFile = None,

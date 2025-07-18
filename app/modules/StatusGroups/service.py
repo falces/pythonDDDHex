@@ -1,8 +1,7 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.StatusGroups.StatusGroup import StatusGroup
-from Application.DTO.StatusGroupDTO import StatusGroupDTO
-from Application.DTO.StatusDTO import StatusDTO
-from app import signals
+from modules.StatusGroups.entities import StatusGroup
+from modules.StatusGroups.dto import StatusGroupDTO, StatusDTO
+from app import signals, app
 import uuid
 
 class StatusService:
@@ -57,7 +56,7 @@ class StatusService:
             }
 
             try:
-                statusesReceived = self.repository.getStatusForGroup(statusGroupReceived['id'], resultsInFile)
+                statusesReceived = self.repository.getStatusByStatusGroup(statusGroupReceived['id'], resultsInFile)
                 for statusReceived in statusesReceived:
                     status = StatusDTO(
                         id = statusReceived['id'],
@@ -71,8 +70,8 @@ class StatusService:
                 pass
 
             signals['new_status_group_received'].send(
-                sender=uuid.uuid4().hex,
-                message=statusGroup,
+                sender = uuid.uuid4().hex,
+                message = statusGroup,
             )
 
             statusGroups.append(statusGroup)

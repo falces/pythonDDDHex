@@ -1,11 +1,7 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.StatusGroups.StatusGroup import StatusGroup
-from Domain.StatusGroups.Entity.Status import Status
-from Domain.StatusGroups.StatusGroupToStatus import StatusGroupToStatus
-from Domain.StatusGroups.StatusGroupToStatusModel import StatusGroupToStatusModel
-from Domain.StatusGroups.Entity.StatusModel import StatusModel
+from modules.StatusGroups.entities import StatusGroup, StatusGroupModel
+from .entities import StatusGroupToStatus, StatusGroupToStatusModel, StatusModel
 from app import db
-from Domain.StatusGroups.StatusGroupModel import StatusGroupModel
 
 
 class StatusGroupRepository(AbstractRepository):
