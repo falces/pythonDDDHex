@@ -16,12 +16,15 @@ class CountryService:
         self,
         countryDTO: CountryDTO,
     ):
+        currency = self.repository.findCurrencyByCountry(countryDTO.code)
+
         country = Country(
             id =         IdCountry.create(countryDTO.id),
             name =       countryDTO.name,
             code =       CountryCode.create(countryDTO.code),
             hasSubzone = countryDTO.hasSubzone,
             isEUMember = countryDTO.isEUMember,
+            currency =   currency,
         )
 
         self.repository.save(country)
@@ -52,16 +55,16 @@ class CountryService:
         countries = []
         for receivedCountry in receivedCountries:
             country = Country(
-                id =         IdCountry.create(receivedCountry['id']),
-                name =       receivedCountry['description'],
-                code =       CountryCode.create(receivedCountry['country_code']),
+                id = IdCountry.create(receivedCountry['id']),
+                name = receivedCountry['description'],
+                code = CountryCode.create(receivedCountry['country_code']),
                 hasSubzone = receivedCountry['subdivisions_in_use'],
                 isEUMember = receivedCountry['eu_member'],
             )
 
             signals['new_country_received'].send(
-                sender=uuid.uuid4().hex,
-                message=country.toDict(),
+                sender = uuid.uuid4().hex,
+                message = country.toDict(),
             )
 
             countries.append(country.toDict())
