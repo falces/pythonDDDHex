@@ -1,15 +1,16 @@
 from flask import Blueprint, request
-from Application.HarmonisedCodesService import ImportHarmonisedCodesService, GetHarmonisedCodesService
+from modules.HarmonisedCodes.service import HarmonisedCodesService
 from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
+from modules.HarmonisedCodes.repository import HarmonisedCodesRepository
 
 harmonisedCodesController = Blueprint('harmonisedCodesController', __name__)
 
 @harmonisedCodesController.route('/import', methods=['POST'])
 def importAllHarmonisedCodes():
-    harmonisedCodesService = ImportHarmonisedCodesService(FulfilmentCrowdAPIRepository)
+    harmonisedCodesService = HarmonisedCodesService(FulfilmentCrowdAPIRepository)
     return harmonisedCodesService.syncHarmonisedCodes()
 
 @harmonisedCodesController.route('/', methods=['GET'])
 def getAllHarmonisedCodes():
-    harmonisedCodesService = GetHarmonisedCodesService(FulfilmentCrowdAPIRepository)
+    harmonisedCodesService = HarmonisedCodesService(HarmonisedCodesRepository)
     return harmonisedCodesService.getAllHarmonisedCodes()

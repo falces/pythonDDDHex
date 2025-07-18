@@ -1,10 +1,9 @@
 from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
-from Domain.HarmonisedCodes.HarmonisedCode import HarmonisedCode
-from Domain.HarmonisedCodes.HarmonisedCodesModel import HarmonisedCodesModel
+from modules.HarmonisedCodes.entities import HarmonisedCode
 from app import db, app
 
 
-class GetHarmonisedCodesService:
+class HarmonisedCodesService:
     def __init__(
         self,
         repository: AbstractRepository,
@@ -16,7 +15,7 @@ class GetHarmonisedCodesService:
         resultsInFile: bool = False,
     ) -> list:
 
-        allHarmonisedCodes = HarmonisedCodesModel.query.all()
+        allHarmonisedCodes = self.repository.model.query.all()
         harmonisedCodes = []
 
         app.logger.info("Total harmonised codes retrieved from database: %s", len(allHarmonisedCodes))
@@ -25,13 +24,6 @@ class GetHarmonisedCodesService:
             harmonisedCodes.append(harmonisedCode.toDict())
 
         return harmonisedCodes
-
-class ImportHarmonisedCodesService:
-    def __init__(
-        self,
-        repository: AbstractRepository,
-    ):
-        self.repository = repository()
 
     def syncHarmonisedCodes(
         self,
