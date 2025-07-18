@@ -10,5 +10,5 @@ class IdValueobject(IntValueObject):
             raise IncorrectValueException(
                 message = "Value " + str(value) + " is not valid for ID",
             )
-        
+
         super().__init__(value)

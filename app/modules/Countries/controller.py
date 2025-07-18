@@ -1,9 +1,9 @@
 from app import signals
 from flask import Blueprint, request
 from modules.Countries.service import CountryService
-from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
+from Shared.Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from modules.Countries.repository import CountryRepository
-from Infrastructure.Controller.ControllerBase import ControllerBase
+from Shared.Infrastructure.Controller.ControllerBase import ControllerBase
 from .dto import CountryDTO
 
 

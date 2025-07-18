@@ -1,6 +1,6 @@
 from flask import Blueprint
 from app import signals
-from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
+from Shared.Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from .repository import CurrencyRepository
 from .service import *
 

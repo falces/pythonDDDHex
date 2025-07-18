@@ -3,7 +3,7 @@ from flask import Blueprint
 import pika
 import datetime
 from flask import current_app as app
-from Infrastructure.Exceptions.RabbitMQException import RabbitMQException
+from Shared.Infrastructure.Exceptions.RabbitMQException import RabbitMQException
 
 rabbitMQSignalListener = Blueprint('rabbitMQSignalListener', __name__)
 

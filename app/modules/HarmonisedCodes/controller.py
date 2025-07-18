@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from modules.HarmonisedCodes.service import HarmonisedCodesService
-from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
+from Shared.Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from modules.HarmonisedCodes.repository import HarmonisedCodesRepository
 
 harmonisedCodesController = Blueprint('harmonisedCodesController', __name__)

@@ -2,10 +2,8 @@ from flask import Blueprint
 from modules.Countries.controller import countryController
 from modules.StatusGroups.controller import statusController
 from modules.HarmonisedCodes.controller import harmonisedCodesController
-from Infrastructure.Controller.SignalListener.RabbitMQListener import rabbitMQSignalListener
+from Shared.Infrastructure.Controller.SignalListener.RabbitMQListener import rabbitMQSignalListener
 from modules.Currencies.controller import currenciesController
-
-
 
 
 v1ControllerBase = Blueprint('v1', __name__)

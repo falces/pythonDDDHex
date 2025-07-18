@@ -4,6 +4,6 @@ class IntValueObject:
         value: int,
     ):
         self.value = value
-        
+
     def getValue(self) -> int:
         return self.value

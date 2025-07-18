@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from app import signals
 from modules.StatusGroups.service import StatusService
 from modules.StatusGroups.dto import StatusGroupDTO
-from Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
+from Shared.Infrastructure.Repository.FulfilmentCrowdAPIRepository import FulfilmentCrowdAPIRepository
 from modules.StatusGroups.repository import StatusGroupRepository
 
 
