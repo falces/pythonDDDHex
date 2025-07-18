@@ -2,6 +2,7 @@ from Shared.Domain.Repositories.AbstractRepository import AbstractRepository
 from .entities import Country, CountryModel, CountriesToCurrenciesModel
 from modules.Countries.entities import Country
 from app import db
+from flask import current_app as app
 
 
 class CountryRepository (AbstractRepository):
@@ -36,4 +37,5 @@ class CountryRepository (AbstractRepository):
                 country = country,
             ).first().currency
         except:
+            app.logger.info("No currency found for country: %s", country)
             return None
